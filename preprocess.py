@@ -22,8 +22,8 @@ def reconstruct_paragraphs(text: str) -> str:
 
 
 if __name__ == "__main__":
-    input_path = Path("data") / "amat_q2_2026_extracted.txt"
-    output_path = Path("data") / "amat_q2_2026_clean.txt"
+    input_path = Path("data") / "amat_q1_2026_extracted.txt"
+    output_path = Path("data") / "amat_q1_2026_clean.txt"
 
     raw = input_path.read_text()
     clean = reconstruct_paragraphs(raw)
