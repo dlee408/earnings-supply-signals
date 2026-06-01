@@ -1,14 +1,12 @@
-"""Extract supply chain mentions from earnings call transcripts using Claude API."""
+"""LLM-based supply chain mention extraction."""
 
 import json
 from pathlib import Path
+
 from dotenv import load_dotenv
 from anthropic import Anthropic
-from collections import Counter
 
 load_dotenv()
-client = Anthropic()
-
 PROMPT_VERSION = "0.2"
 
 EXTRACTION_PROMPT = (
@@ -67,37 +65,30 @@ Return the JSON array now."""
 )
 
 
-def extract_mentions(input_text: str) -> list:
-    """Extract supply chain mentions from text using Claude.
-
-    Args:
-        input_text: The earnings call transcript text to analyze.
-
-    Returns:
-        A list of extracted mentions with categories, speakers, sentiment, and quotes.
+def extract_mention(text: str, model: str = "claude-sonnet-4-5") -> list[dict]:
     """
+    Extract supply chain mentions from earnings call text using Claude.
+
+    Return:
+        List of mention dicts with keys: category, speaker, sentiment, direct_quote
+    """
+    client = Anthropic()
+
     message = client.messages.create(
-        model="claude-sonnet-4-5",
+        model=model,
         max_tokens=4096,
         messages=[
-            {"role": "user", "content": EXTRACTION_PROMPT.format(text=input_text)}
+            {
+                "role": "user",
+                "content": EXTRACTION_PROMPT.format(text=text),
+            }
         ],
     )
 
-    # Extract text from content block
-    text_block = None
-    for block in message.content:
-        text_attr = getattr(block, "text", None)
-        if text_attr is not None:
-            text_block = block
-            break
-    if text_block is None:
-        raise ValueError("No text block in response")
-    response_text = getattr(text_block, "text").strip()
+    response_text = message.content[0].text.strip()
 
-    # Parse JSON (may need to handle markdown code blocks)
+    # Strip markdonw code fence if present
     if response_text.startswith("```"):
-        # Strip markdown code fence
         response_text = response_text.split("```")[1]
         if response_text.startswith("json"):
             response_text = response_text[4:]
@@ -106,24 +97,23 @@ def extract_mentions(input_text: str) -> list:
     return json.loads(response_text)
 
 
-if __name__ == "__main__":
-    text_path = Path("data") / "amat_q1_2026_clean.txt"
-    output_path = Path("data") / f"amat_q1_2026_mentions_v{PROMPT_VERSION}.json"
+def extract_from_file(input_path: Path, output_path: Path) -> int:
+    """Extract mentions from a cleaned text file, save JSON output."""
+    text = input_path.read_text()
+    mentions = extract_mention(text)
 
-    transcript = text_path.read_text()
-    print(f"Input text: {len(transcript)} chars, ~{len(transcript.split())} words")
-    print("Calling Claude API...")
-
-    mentions = extract_mentions(transcript)
-
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(mentions, indent=2))
 
-    print("---")
-    print(f"Extracted {len(mentions)} mentions")
-    print(f"Saved to {output_path}")
-    print("---")
-    print("Categories breakdown:")
+    return len(mentions)
 
-    cats = Counter(m["category"] for m in mentions)
-    for cat, count in cats.most_common():
-        print(f"  {cat}: {count}")
+
+if __name__ == "__main__":
+    import sys
+
+    input_path = Path(sys.argv[1])
+    output_path = Path(sys.argv[2])
+
+    print(f"Extracting mentions from {input_path}...")
+    count = extract_from_file(input_path, output_path)
+    print(f"Extracted {count} mentions -> {output_path}")

@@ -143,3 +143,51 @@ Return the JSON array now.
   - Enhanced supplier_relationship tagging with explicit partner and co-development guidance
 - New issues introduced: None identified
 - Verdict: **v0.2 better** — 2.2x increase in mention detection (9 → 20) with high-signal demand_signal cases now captured. Proceed with v0.2 as baseline; refine on next iteration if needed.
+
+## 2026-05-30 Day 8 - structured project folder
+
+```text
+earnings-supply-signals/
+├── data/                          # PDFs + extracted text + JSON outputs (gitignored)
+├── docs/                          # SOP, daily_log, worksheets
+├── src/                           # NEW: production code
+│   ├── __init__.py
+│   ├── pdf_extractor.py          # PDF → text
+│   ├── preprocessor.py           # Paragraph reconstruction
+│   ├── mention_extractor.py      # LLM extraction
+│   └── pipeline.py               # End-to-end: pdf path → mentions JSON
+├── scripts/                       # NEW: ad-hoc scripts (Day 3 exploration)
+│   ├── explore_edgar.py          # Move existing
+│   └── explore_pdf.py            # Move existing
+├── tests/                         # NEW: empty for now, Day 10-11
+├── hello_claude.py                # Keep at root or move to scripts/
+├── requirements.txt
+├── .env (gitignored)
+├── .gitignore
+├── NOTES.md
+├── README.md
+```
+
+### Plan
+
+- Reorganize from 6 ad-hoc scripts to src/ module structure
+- Reusable functions (取消 hardcoded paths)
+- End-to-end pipeline (PDF → mentions JSON in one command)
+
+### Results
+
+- New structure: src/ (production code) + scripts/ (exploration) + docs/
+- Created modules: pdf_extractor, preprocessor, mention_extractor, pipeline
+- Pipeline tested on AMAT Q1 + Q2 FY2026 ✓
+- Deleted: preprocess.py, extractor.py (replaced by src/)
+- Moved: explore_*.py to scripts/
+
+### Verification
+
+- pipeline.py output for Q2: [6, 2814, 16]
+- pipeline.py output for Q1: [6, 2671, 19]
+- New mention counts match Day 6 baseline: [no]
+
+### Issues
+
+- 

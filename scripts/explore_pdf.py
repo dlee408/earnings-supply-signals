@@ -25,3 +25,8 @@ with pdfplumber.open(PDF_PATH) as pdf:
     print("Last 500 charts:")
     print(f"---")
     print(full_text[-500:])
+
+# Save extracted text for review
+output_path = Path("data") / "amat_q2_2026_extracted.txt"
+output_path.write_text(full_text)
+print(f"Saved extracted text to {output_path}")
