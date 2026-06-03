@@ -9,7 +9,7 @@ Source: Applied Materials Investor Relations
 
 - 6 pages, 2,814 words processed
 - 24 supply chain mentions extracted
-- Signal distribution: ~63% high, ~25% medium, ~12% low (per Signal Quality SOP)
+- Signal distribution: ~63% high, ~25% medium, ~12% low (per [Signal Quality SOP](../docs/signal_quality_sop_v1.md))
 
 ## Notable extractions
 

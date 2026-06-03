@@ -1,6 +1,6 @@
 # Project Daily Log
 
-## Day 7 (2026-05-29) - H/M/L Evaluation
+## Day 7 - H/M/L Evaluation
 
 ### Plan (morning)
 
@@ -32,7 +32,7 @@ character. Future versions may benefit from transcript-type tagging.
 
 ---
 
-## Day 9 (2026-06-01) - temperature=0, project reframe, degree decision
+## Day 9 - temperature=0, project reframe, degree decision
 
 ### Phase 1: temperature=0 mitigation
 
@@ -52,4 +52,49 @@ Spot check finding:
 
 Insight: temperature=0 increases comprehensiveness, not selectivity.
 Trade-off documented for README.
-...
+
+## Day 9 (2026-06-01) - v0.1 SHIPPED
+
+### Substantive work today
+
+**Phase 1: temperature=0 baseline**
+
+- Added `temperature=0` to mention_extractor.py
+- New baseline: Q2 FY2026 = 24 mentions, Q1 FY2026 = 21 mentions
+- Variance analysis: temperature=0 increases comprehensiveness not selectivity
+- "neutral" sentiment value emerged (acceptable schema extension)
+
+**Phase 2: Major decisions**
+
+- Project reframe: "honest learning project" not "production tool"
+
+**Phase 3: README + example**
+
+- README v1.0: 136 lines, all sections
+- Theory of Constraints framing for "What this demonstrates"
+- Mermaid pipeline diagram in "How it works"
+- 5 honest limitations documented
+- 1 example case study: AMAT Q2 FY2026 record quarter
+
+### Total session time
+
+~5 hours across morning, afternoon
+
+### v0.1 deliverables shipped
+
+- ✓ End-to-end pipeline (PDF → JSON)
+- ✓ 4 modules in src/
+- ✓ SOP document (signal_quality_sop_v1.md)
+- ✓ README v1.0
+- ✓ 1 example case study
+- ✓ Daily log (9 entries)
+- ✓ All on public GitHub
+
+### Outstanding items (intentionally deferred)
+
+- Post draft → in plan
+- Examples beyond 1 → out of v0.1 scope
+- Error handling, logging → out of v0.1 scope
+- Q&A transcript processing → out of v0.1 scope, future v0.2 candidate
+
+### Status: v0.1 SHIPPED

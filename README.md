@@ -127,6 +127,7 @@ earnings-supply-signals/
 ├── scripts/                # Ad-hoc exploration scripts
 ├── docs/                   # SOP and daily logs
 ├── examples/               # Sample case studies
+│   └── example_amat_q2_record_quarter.md
 └── data/                   # Input PDFs and outputs (gitignored)
 ```
 
