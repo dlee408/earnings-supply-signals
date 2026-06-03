@@ -77,6 +77,7 @@ def extract_mention(text: str, model: str = "claude-sonnet-4-5") -> list[dict]:
     message = client.messages.create(
         model=model,
         max_tokens=4096,
+        temperature=0,  # try to fix variance between LLM API call
         messages=[
             {
                 "role": "user",

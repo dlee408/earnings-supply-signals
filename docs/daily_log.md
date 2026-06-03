@@ -32,6 +32,24 @@ character. Future versions may benefit from transcript-type tagging.
 
 ---
 
-## Day 8 (2026-05-30) - [topic]
+## Day 9 (2026-06-01) - temperature=0, project reframe, degree decision
 
+### Phase 1: temperature=0 mitigation
+
+Added `temperature=0` to `src/mention_extractor.py`.
+Re-ran pipeline on Q1 + Q2 transcripts.
+
+Baseline updated (with temperature=0):
+
+- Q2 FY2026: 24 mentions (was 20 at temp=1 in Day 6)
+- Q1 FY2026: 21 mentions (was 17 at temp=1 in Day 6)
+
+Spot check finding:
+
+- Day 6 mentions remain in new outputs (subset preserved)
+- New mentions are mostly medium-low signal
+- "neutral" sentiment value emerged (not previously seen)
+
+Insight: temperature=0 increases comprehensiveness, not selectivity.
+Trade-off documented for README.
 ...
